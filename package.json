@@ -1,0 +1,23 @@
+{
+  "name": "geneticsentence",
+  "version": "0.0.1",
+  "description": "A test for genetic algorithm",
+  "main": "geneticsentence.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Thanadev/GeneticSentence.git"
+  },
+  "author": "Thanadev",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Thanadev/GeneticSentence/issues"
+  },
+  "dependencies": {
+    "taminahx": "1.0.18",
+    "msignal": ">=1.2.3"
+  },
+  "homepage": "https://github.com/Thanadev/GeneticSentence#readme"
+}
