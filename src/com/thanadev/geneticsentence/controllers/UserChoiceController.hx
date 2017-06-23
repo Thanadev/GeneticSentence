@@ -1,5 +1,6 @@
 package com.thanadev.geneticsentence.controllers;
 
+import com.thanadev.geneticsentence.services.NotificationService;
 import org.tamina.events.html.MouseEventType;
 import js.html.ButtonElement;
 import js.html.InputElement;
@@ -23,5 +24,6 @@ class UserChoiceController extends HTMLComponent {
 
     private function submitClickedHandler():Void {
         trace("Clicked with text " + _sentenceInput.value);
+        NotificationService.get__instance().get__userValidateSignal().dispatch(_sentenceInput.value);
     }
 }
