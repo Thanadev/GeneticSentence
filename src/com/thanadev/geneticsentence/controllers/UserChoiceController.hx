@@ -1,5 +1,6 @@
 package com.thanadev.geneticsentence.controllers;
 
+import js.RegExp;
 import com.thanadev.geneticsentence.services.NotificationService;
 import org.tamina.events.html.MouseEventType;
 import js.html.ButtonElement;
@@ -24,6 +25,13 @@ class UserChoiceController extends HTMLComponent {
 
     private function submitClickedHandler():Void {
         trace("Clicked with text " + _sentenceInput.value);
-        NotificationService.get__instance().get__userValidateSignal().dispatch(_sentenceInput.value);
+        var inputRegexp = new RegExp('^[A-Z]+$');
+
+        if (inputRegexp.test(_sentenceInput.value)) {
+            _submitButton.disabled = true;
+            NotificationService.get__instance().get__userValidateSignal().dispatch(_sentenceInput.value);
+        } else {
+            trace("Invalid input");
+        }
     }
 }

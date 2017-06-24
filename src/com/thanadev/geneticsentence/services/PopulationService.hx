@@ -1,5 +1,6 @@
 package com.thanadev.geneticsentence.services;
 
+import com.thanadev.geneticsentence.classes.Settings;
 import com.thanadev.geneticsentence.classes.PopulationElement;
 
 class PopulationService {
@@ -11,16 +12,20 @@ class PopulationService {
         _population = new Array<PopulationElement>();
     }
 
-    public function initPopulation(popNb:Int):Void {
+    public function initPopulation(popNb:Int, charNb:Int):Void {
         for (i in 0...popNb) {
-            _population.push(generateRandomPopElement());
+            _population.push(generateRandomPopElement(charNb));
         }
     }
 
-    private function generateRandomPopElement():PopulationElement {
-        // TODO
+    private function generateRandomPopElement(charNb:Int):PopulationElement {
+        var sentence = "";
+        for (i in 0...charNb) {
+            var index = Math.floor(Settings.POSSIBLE_CHARS.length * Math.random());
+            sentence += Settings.POSSIBLE_CHARS[index];
+        }
 
-        return new PopulationElement ('TODO');
+        return new PopulationElement (sentence);
     }
 
     public static function get__instance():PopulationService {
@@ -31,7 +36,7 @@ class PopulationService {
         return _instance;
     }
 
-    public function get__population():Array {
+    public function get__population():Array<PopulationElement> {
         return _population;
     }
 }

@@ -9,6 +9,7 @@ import org.tamina.html.component.HTMLComponent;
 class MainController extends HTMLComponent {
 
     @skinpart('') private var _userChoiceElement:UserChoiceController;
+    @skinpart('') private var _populationElement:PopulationController;
     @skinpart('') private var _sentenceLabel:Element;
 
     private var _sentenceWanted:String;
@@ -24,5 +25,6 @@ class MainController extends HTMLComponent {
     private function userValidatedHandler(sentence:String):Void {
         _sentenceWanted = sentence;
         _sentenceLabel.innerText = _sentenceWanted;
+        _populationElement.startProcess(_sentenceWanted);
     }
 }

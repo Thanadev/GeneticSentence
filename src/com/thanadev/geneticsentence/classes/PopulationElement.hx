@@ -8,7 +8,7 @@ class PopulationElement {
         _sentence = sentence;
     }
 
-    function get__sentence():String {
+    public function get__sentence():String {
         return _sentence;
     }
 }
