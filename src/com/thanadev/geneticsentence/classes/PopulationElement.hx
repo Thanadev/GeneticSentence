@@ -1,5 +1,7 @@
 package com.thanadev.geneticsentence.classes;
 
+import Math;
+
 class PopulationElement {
 
     @:isVar var _sentence(get, null):String;
@@ -15,9 +17,26 @@ class PopulationElement {
             if (wantedSentence.indexOf(_sentence.charAt(i)) > -1) {
                 fitness++;
             }
+
+            // It's well placed, add another point
+            if (wantedSentence.charAt(i) == _sentence.charAt(i)) {
+                fitness++;
+            }
         }
 
         return fitness;
+    }
+
+    public function getCrossoverPart(roundToSup:Bool):String {
+        var geneticPart = "";
+
+        if (roundToSup) {
+            geneticPart = _sentence.substr(0, Math.round(_sentence.length / 2));
+        } else {
+            geneticPart = _sentence.substr(0, Math.floor(_sentence.length / 2));
+        }
+
+        return geneticPart;
     }
 
     public function get__sentence():String {

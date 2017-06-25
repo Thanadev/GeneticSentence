@@ -24,8 +24,8 @@ class PopulationService {
     public function startReproductionProcess(wantedSentence:String):Void {
         var fitnessMap = new Map<Int, Array<PopulationElement>>();
 
-        // Init
-        for (fitness in 0...wantedSentence.length) {
+        // Init with a large fitness possibility
+        for (fitness in 0...wantedSentence.length + 10) {
             fitnessMap.arrayWrite(fitness, new Array<PopulationElement>());
         }
 
@@ -57,8 +57,13 @@ class PopulationService {
         var children = new Array<PopulationElement>();
 
         for (i in 0..._population.length) {
-            var index = Math.floor(parents.length * Math.random());
-            children.push(parents[index]);
+            // Crossover phase
+            var indexParent1 = Math.floor(parents.length * Math.random());
+            var indexParent2 = Math.floor(parents.length * Math.random());
+            var parent1 = parents[indexParent1];
+            var parent2 = parents[indexParent2];
+
+            children.push(new PopulationElement(parent1.getCrossoverPart(false) + parent2.getCrossoverPart(true)));
         }
 
         _population = children;
