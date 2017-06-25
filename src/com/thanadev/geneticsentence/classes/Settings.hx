@@ -1,7 +1,7 @@
 package com.thanadev.geneticsentence.classes;
 
 class Settings {
-    public static inline var POPULATION_NUMBER = 100;
+    public static inline var POPULATION_NUMBER = 10;
     public static var POSSIBLE_CHARS = [
         'A',
         'B',
