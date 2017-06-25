@@ -22,34 +22,25 @@ class PopulationService {
     }
 
     public function startReproductionProcess(wantedSentence:String):Void {
-        var fitnessMap = new Map<Int, Array<PopulationElement>>();
+        // Parent selection
+        var maxFitness:Float = 0;
 
-        // Init with a large fitness possibility
-        for (fitness in 0...wantedSentence.length + 10) {
-            fitnessMap.arrayWrite(fitness, new Array<PopulationElement>());
-        }
-
-        // Get fitness and order them in map
         for (i in 0..._population.length) {
-            var key = _population[i].getFitnessScore(wantedSentence);
-            if (fitnessMap.exists(key)) {
-                fitnessMap.get(key).push(_population[i]);
-            } else{
-                trace("Inexistant fitness score : " + key);
+            var fitness = _population[i].getFitnessScore(wantedSentence);
+
+            if (fitness > maxFitness) {
+                maxFitness = fitness;
             }
         }
 
-        // Prepare parents with probabilities
+        // map all fitnesses between 0 and 1 according to the max fitness to get the ratio of darwin pool
         var parents = new Array<PopulationElement>();
 
-        // key is Int
-        for (key in fitnessMap.keys()) {
-            var popSegment:Array<PopulationElement> = fitnessMap.get(key);
+        for (i in 0..._population.length) {
+            var nbToPush = Math.floor(_population[i].getFitnessScore(wantedSentence) / maxFitness * 100);
 
-            for (childCount in 0...popSegment.length) {
-                for (repetition in 0...key) {
-                    parents.push(popSegment[childCount]);
-                }
+            for (j in 0...nbToPush) {
+                parents.push(_population[i]);
             }
         }
 
@@ -63,7 +54,10 @@ class PopulationService {
             var parent1 = parents[indexParent1];
             var parent2 = parents[indexParent2];
 
-            children.push(new PopulationElement(parent1.getCrossoverPart(false) + parent2.getCrossoverPart(true)));
+            var child = new PopulationElement(parent1.getCrossoverPart(true) + parent2.getCrossoverPart(false));
+            child.getMutation();
+
+            children.push(child);
         }
 
         _population = children;
