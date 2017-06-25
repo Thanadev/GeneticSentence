@@ -24,10 +24,12 @@ class PopulationService {
     public function startReproductionProcess(wantedSentence:String):Void {
         var fitnessMap = new Map<Int, Array<PopulationElement>>();
 
+        // Init
         for (fitness in 0...wantedSentence.length) {
             fitnessMap.arrayWrite(fitness, new Array<PopulationElement>());
         }
 
+        // Get fitness and order them in map
         for (i in 0..._population.length) {
             var key = _population[i].getFitnessScore(wantedSentence);
             if (fitnessMap.exists(key)) {
@@ -37,15 +39,29 @@ class PopulationService {
             }
         }
 
-        _population = new Array<PopulationElement>();
+        // Prepare parents with probabilities
+        var parents = new Array<PopulationElement>();
 
-        for (fitness in fitnessMap.keys()) {
-            for (popElement in fitnessMap.get(fitness)) {
-                _population.push(popElement);
+        // key is Int
+        for (key in fitnessMap.keys()) {
+            var popSegment:Array<PopulationElement> = fitnessMap.get(key);
+
+            for (childCount in 0...popSegment.length) {
+                for (repetition in 0...key) {
+                    parents.push(popSegment[childCount]);
+                }
             }
         }
 
-        _population.reverse();
+        // Produce a new pop of PopNB Elements
+        var children = new Array<PopulationElement>();
+
+        for (i in 0..._population.length) {
+            var index = Math.floor(parents.length * Math.random());
+            children.push(parents[index]);
+        }
+
+        _population = children;
 
         NotificationService.get__instance().get__populationActualizedSignal().dispatch();
     }

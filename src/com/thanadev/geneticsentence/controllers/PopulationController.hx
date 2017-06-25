@@ -30,9 +30,9 @@ class PopulationController extends HTMLComponent {
         actualizePop();
 
         var timer = new Timer(1000);
-        Timer.delay(function():Void {
+        timer.run = function():Void {
             _popService.startReproductionProcess(_sentenceWanted);
-        }, 5000);
+        };
     }
 
     private function actualizePop():Void {
